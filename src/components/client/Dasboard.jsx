@@ -277,133 +277,7 @@ export default function UserClinicDashboard() {
     <TooltipProvider>
       <div style={{ fontFamily:F, background:BG, minHeight:"100vh" }}>
 
-        {/* ── TOP NAVBAR ── */}
-        <header className="sticky top-0 z-50 bg-white" style={{ borderBottom:`1.5px solid ${BD}`, boxShadow:"0 2px 16px rgba(220,38,38,.06)" }}>
-
-          {/* Brand bar */}
-          <div style={{ background:`linear-gradient(135deg,${R},${P})` }} className="px-6 py-2 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center">
-                <HeartPulse size={15} color="#fff" />
-              </div>
-              <span style={{ fontFamily:F, fontSize:13, fontWeight:800, color:"#fff", letterSpacing:"-0.02em" }}>HealthPoint Student Portal</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-white/70 hidden sm:block" style={{ fontFamily:F }}>College Health Services</span>
-              <div className="h-4 w-px bg-white/30" />
-              <span className="text-xs text-white/70" style={{ fontFamily:F }}>Hotline: 8-888-1234</span>
-            </div>
-          </div>
-
-          {/* Main nav row */}
-          <div className="px-6 flex items-center justify-between h-14 gap-4">
-
-            {/* Desktop nav links */}
-            <nav className="hidden md:flex items-center gap-1">
-              {NAV.map(item=><NavLink key={item.key} item={item} />)}
-            </nav>
-
-            {/* Right side */}
-            <div className="flex items-center gap-2 ml-auto">
-              {/* Search */}
-              <div className="hidden lg:flex items-center gap-2 border rounded-xl px-3 py-1.5 text-xs" style={{ borderColor:BD, background:"#fff", fontFamily:F }}>
-                <Search size={13} className="text-rose-300" />
-                <input placeholder="Search records…" className="outline-none text-xs bg-transparent w-36" style={{ fontFamily:F }} />
-              </div>
-
-              {/* Book btn */}
-              <BookDialog onAdd={addApt} trigger={
-                <Button size="sm" className="gap-1.5 text-xs font-extrabold hidden sm:flex" style={{ background:`linear-gradient(135deg,${R},${P})`, fontFamily:F }}>
-                  <Plus size={13} /> Book Appointment
-                </Button>
-              } />
-
-              {/* Notification bell */}
-              <DropdownMenu open={notifOpen} onOpenChange={setNotifOpen}>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative hover:bg-rose-50">
-                    <Bell size={16} className="text-gray-500" />
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ background:R }} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-72 p-0 rounded-2xl overflow-hidden shadow-xl">
-                  <div className="px-4 py-3" style={{ background:`linear-gradient(135deg,${R},${P})` }}>
-                    <p className="text-xs font-extrabold text-white" style={{ fontFamily:F }}>Notifications</p>
-                  </div>
-                  {[
-                    { title:"Appointment Confirmed", body:"Your check-up on Mar 2 is confirmed.", time:"2h ago", color:R },
-                    { title:"Clinic Closed — Holiday", body:"The clinic will be closed on Mar 8.", time:"1d ago", color:"#f97316" },
-                    { title:"Free Dental Camp", body:"Walk-in dental on Mar 5, 8AM–3PM.", time:"2d ago", color:P },
-                  ].map((n,i)=>(
-                    <div key={i} className="flex gap-3 px-4 py-3 hover:bg-rose-50/50 cursor-pointer" style={{ borderBottom:i<2?`1px solid ${BD}`:"none" }}>
-                      <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" style={{ background:n.color }} />
-                      <div>
-                        <p className="text-xs font-bold text-gray-800" style={{ fontFamily:F }}>{n.title}</p>
-                        <p className="text-xs text-gray-500 mt-0.5" style={{ fontFamily:F }}>{n.body}</p>
-                        <p className="text-xs text-gray-400 mt-0.5" style={{ fontFamily:F }}>{n.time}</p>
-                      </div>
-                    </div>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Profile dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 px-2 hover:bg-rose-50">
-                    <Avatar className="w-7 h-7 rounded-lg">
-                      <AvatarFallback className="rounded-lg text-xs font-extrabold" style={{ background:`${R}18`, color:R, fontFamily:F }}>AS</AvatarFallback>
-                    </Avatar>
-                    <div className="hidden sm:block text-left">
-                      <p className="text-xs font-extrabold text-gray-800 leading-none" style={{ fontFamily:F }}>{ME.name}</p>
-                      <p className="text-xs text-gray-400 leading-none mt-0.5" style={{ fontFamily:F }}>{ME.id}</p>
-                    </div>
-                    <ChevronDown size={12} className="text-gray-400 hidden sm:block" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52 rounded-2xl shadow-xl" style={{ fontFamily:F }}>
-                  <DropdownMenuLabel className="font-extrabold text-xs" style={{ fontFamily:F }}>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-xs gap-2 cursor-pointer" style={{ fontFamily:F }}><User size={13} /> Profile</DropdownMenuItem>
-                  <DropdownMenuItem className="text-xs gap-2 cursor-pointer" style={{ fontFamily:F }}><Settings size={13} /> Settings</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-xs gap-2 cursor-pointer text-red-500" style={{ fontFamily:F }}><LogOut size={13} /> Logout</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Mobile hamburger */}
-              <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="md:hidden hover:bg-rose-50">
-                    <Menu size={18} className="text-gray-600" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-64 p-0">
-                  <div className="px-4 py-5" style={{ background:`linear-gradient(135deg,${R},${P})` }}>
-                    <div className="flex items-center gap-2.5">
-                      <Avatar className="w-9 h-9 rounded-xl">
-                        <AvatarFallback className="rounded-xl text-sm font-extrabold" style={{ background:"rgba(255,255,255,.2)", color:"#fff", fontFamily:F }}>AS</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="text-sm font-extrabold text-white" style={{ fontFamily:F }}>{ME.name}</p>
-                        <p className="text-xs text-white/60" style={{ fontFamily:F }}>{ME.id}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <nav className="p-3 space-y-1">
-                    {NAV.map(item=><NavLink key={item.key} item={item} mobile />)}
-                    <Separator className="my-2" />
-                    <BookDialog onAdd={addApt} trigger={
-                      <Button className="w-full text-xs font-extrabold gap-1.5 mt-1" style={{ background:`linear-gradient(135deg,${R},${P})`, fontFamily:F }}>
-                        <Plus size={13} /> Book Appointment
-                      </Button>
-                    } />
-                  </nav>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </div>
-        </header>
+     
 
         {/* ── PAGE CONTENT ── */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
@@ -439,83 +313,9 @@ export default function UserClinicDashboard() {
                 <StatCard label="Certificates"       value={certs.length}          Icon={Award}         accent="#8b5cf6"   sub="Issued" />
               </div>
 
-              {/* Next appointment banner */}
-              {nextApt && (
-                <Card className="border-0 shadow-sm" style={{ borderLeft:`4px solid ${R}`, background:"#fff" }}>
-                  <CardContent className="p-4 flex items-center justify-between flex-wrap gap-3">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background:RL }}>
-                        <CalendarDays size={22} style={{ color:R }} />
-                      </div>
-                      <div>
-                        <p className="text-xs font-extrabold text-gray-800" style={{ fontFamily:F }}>Next Appointment</p>
-                        <p className="text-sm font-extrabold mt-0.5" style={{ color:R, fontFamily:F }}>{nextApt.type} — {nextApt.service}</p>
-                        <p className="text-xs text-gray-500 mt-0.5" style={{ fontFamily:F }}>{nextApt.date} at {nextApt.time} · {nextApt.doctor}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <StatusBadge s={nextApt.status} />
-                      <Button size="sm" variant="outline" className="text-xs font-bold border-red-200 text-red-500 hover:bg-rose-50" style={{ fontFamily:F }}
-                        onClick={()=>setTab("appointments")}>
-                        View Details <ChevronRight size={12} />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+            
 
-              {/* Charts row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <Card className="col-span-2 border-0 shadow-sm" style={{ borderTop:`3px solid ${R}` }}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-extrabold" style={{ color:R, fontFamily:F }}>Visit History</CardTitle>
-                    <CardDescription className="text-xs" style={{ fontFamily:F }}>Last 6 months</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={160}>
-                      <AreaChart data={CHART_VISITS}>
-                        <defs>
-                          <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%"  stopColor={R} stopOpacity={0.25} />
-                            <stop offset="95%" stopColor={R} stopOpacity={0}    />
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke={BD} />
-                        <XAxis dataKey="month" tick={{ fontSize:10, fill:"#9ca3af", fontFamily:F }} axisLine={false} tickLine={false} />
-                        <YAxis allowDecimals={false} tick={{ fontSize:10, fill:"#9ca3af", fontFamily:F }} axisLine={false} tickLine={false} />
-                        <RTooltip content={<ChartTip />} />
-                        <Area type="monotone" dataKey="visits" name="Visits" stroke={R} strokeWidth={2.5} fill="url(#gV)" />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-0 shadow-sm" style={{ borderTop:`3px solid ${P}` }}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-extrabold" style={{ color:R, fontFamily:F }}>Visit Types</CardTitle>
-                    <CardDescription className="text-xs" style={{ fontFamily:F }}>Distribution</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={100}>
-                      <PieChart>
-                        <Pie data={pieData} cx="50%" cy="50%" innerRadius={28} outerRadius={44} dataKey="value" paddingAngle={3}>
-                          {pieData.map((e,i)=><Cell key={i} fill={e.fill} />)}
-                        </Pie>
-                        <RTooltip content={<ChartTip />} />
-                      </PieChart>
-                    </ResponsiveContainer>
-                    <div className="space-y-1 mt-2">
-                      {pieData.map(d=>(
-                        <div key={d.name} className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-sm shrink-0" style={{ background:d.fill }} />
-                          <span className="text-xs flex-1 text-gray-500" style={{ fontFamily:F }}>{d.name}</span>
-                          <span className="text-xs font-extrabold" style={{ fontFamily:F }}>{d.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+           
 
               {/* Announcements preview */}
               <Card className="border-0 shadow-sm" style={{ borderTop:`3px solid ${RO}` }}>
@@ -838,7 +638,7 @@ export default function UserClinicDashboard() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-12 py-6 px-6" style={{ borderTop:`1px solid ${BD}`, background:"#fff" }}>
+        <footer className="absolute bottom-0 left-0 right-0 py-6 px-6" style={{ borderTop:`1px solid ${BD}`, background:"#fff" }}>
           <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-2">
               <HeartPulse size={14} style={{ color:R }} />

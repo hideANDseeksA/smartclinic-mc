@@ -744,11 +744,7 @@ export default function ClinicDashboard() {
   const NAV = [
     { key:"dashboard",    label:"Dashboard",     Icon:LayoutDashboard },
     { key:"appointments", label:"Appointments",  Icon:CalendarDays    },
-    { key:"records",      label:"Health Records",Icon:ClipboardList   },
-    { key:"certificates", label:"Certificates",  Icon:Award           },
-    { key:"schedule",     label:"Schedule",      Icon:CalendarClock   },
-    { key:"students",     label:"Students",      Icon:Users           },
-    { key:"analytics",    label:"Analytics",     Icon:BarChart2       },
+
   ];
 
   const goTo = (k) => { setTab(k); setSearch(""); setFilter("All"); };
@@ -851,60 +847,9 @@ export default function ClinicDashboard() {
                   </div>
 
                   <div className="grid grid-cols-3 gap-4">
-                    <Card className="col-span-2 border-0 shadow-sm" style={{ borderTop: `3px solid ${RED}` }}>
-                      <CardHeader className="pb-2">
-                        <CardTitle style={{ fontFamily: FONT, color: RED, fontSize: 14, fontWeight: 800 }}>Monthly Visits — 2025</CardTitle>
-                        <CardDescription style={{ fontFamily: FONT, fontSize: 11 }}>All service types combined</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <ResponsiveContainer width="100%" height={200}>
-                          <AreaChart data={monthlyData}>
-                            <defs>
-                              <linearGradient id="gVisits" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%"  stopColor={RED}  stopOpacity={0.25} />
-                                <stop offset="95%" stopColor={RED}  stopOpacity={0}    />
-                              </linearGradient>
-                              <linearGradient id="gDental" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%"  stopColor={PINK} stopOpacity={0.2} />
-                                <stop offset="95%" stopColor={PINK} stopOpacity={0}   />
-                              </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#fde8e8" />
-                            <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: FONT }} axisLine={false} tickLine={false} />
-                            <YAxis tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: FONT }} axisLine={false} tickLine={false} />
-                            <RTooltip content={<ChartTooltip />} />
-                            <Area type="monotone" dataKey="visits" name="Total Visits" stroke={RED}  strokeWidth={2.5} fill="url(#gVisits)" />
-                            <Area type="monotone" dataKey="dental" name="Dental"       stroke={PINK} strokeWidth={2}   fill="url(#gDental)" />
-                          </AreaChart>
-                        </ResponsiveContainer>
-                      </CardContent>
-                    </Card>
+                 
 
-                    <Card className="border-0 shadow-sm" style={{ borderTop: `3px solid ${PINK}` }}>
-                      <CardHeader className="pb-2">
-                        <CardTitle style={{ fontFamily: FONT, color: RED, fontSize: 14, fontWeight: 800 }}>Service Breakdown</CardTitle>
-                        <CardDescription style={{ fontFamily: FONT, fontSize: 11 }}>{svcTotal} total visits</CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex flex-col items-center gap-3">
-                        <ResponsiveContainer width="100%" height={140}>
-                          <PieChart>
-                            <Pie data={serviceData} cx="50%" cy="50%" innerRadius={42} outerRadius={62} dataKey="value" paddingAngle={3}>
-                              {serviceData.map((e, i) => <Cell key={i} fill={e.fill} />)}
-                            </Pie>
-                            <RTooltip content={<ChartTooltip />} />
-                          </PieChart>
-                        </ResponsiveContainer>
-                        <div className="w-full space-y-1.5">
-                          {serviceData.map(d => (
-                            <div key={d.name} className="flex items-center gap-2">
-                              <div className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: d.fill }} />
-                              <span className="text-xs flex-1 text-gray-500" style={{ fontFamily: FONT }}>{d.name}</span>
-                              <span className="text-xs font-extrabold text-gray-800" style={{ fontFamily: FONT }}>{d.value}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+                  
                   </div>
 
                   <Card className="border-0 shadow-sm" style={{ borderTop: `3px solid ${ROSE}` }}>
